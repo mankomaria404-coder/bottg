@@ -1,5 +1,5 @@
 {
-  "name": "telegram-snake-miniapp",
+  "name": "telegram-snake-mobile",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
