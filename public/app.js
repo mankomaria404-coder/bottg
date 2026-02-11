@@ -122,7 +122,7 @@ function draw() {
     // голова
     if (snake.length >= 1) {
         const head = snake[0];
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "green";
         ctx.fillRect(head.x*tileSize, head.y*tileSize, tileSize-2, tileSize-2);
     }
 
