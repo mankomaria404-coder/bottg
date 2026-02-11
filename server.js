@@ -1,8 +1,16 @@
-const PORT = process.env.PORT || 3000;
+const express = require("express");
+const sqlite3 = require("sqlite3").verbose();
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
 
-app.listen(PORT, () => {
-    console.log("Server started");
-});
+const app = express();
+const db = new sqlite3.Database("./database.sqlite");
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "public")));
+
 db.run(`
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
@@ -15,7 +23,26 @@ CREATE TABLE IF NOT EXISTS users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 )
 `);
-// Получить рекорд игрока
+
+app.post("/api/user", (req, res) => {
+    const { telegram_id, first_name, last_name, username, photo_url } = req.body;
+
+    db.run(
+        `INSERT INTO users (telegram_id, first_name, last_name, username, photo_url)
+         VALUES (?, ?, ?, ?, ?)
+         ON CONFLICT(telegram_id) DO UPDATE SET
+            first_name=excluded.first_name,
+            last_name=excluded.last_name,
+            username=excluded.username,
+            photo_url=excluded.photo_url`,
+        [telegram_id, first_name, last_name, username, photo_url],
+        function (err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ success: true });
+        }
+    );
+});
+
 app.get("/api/best-score/:id", (req, res) => {
     db.get(
         "SELECT best_score FROM users WHERE telegram_id = ?",
@@ -27,7 +54,6 @@ app.get("/api/best-score/:id", (req, res) => {
     );
 });
 
-// Обновить рекорд
 app.post("/api/best-score", (req, res) => {
     const { telegram_id, score } = req.body;
 
@@ -46,7 +72,6 @@ app.post("/api/best-score", (req, res) => {
     );
 });
 
-// Топ 10 игроков
 app.get("/api/leaderboard", (req, res) => {
     db.all(
         "SELECT username, best_score FROM users ORDER BY best_score DESC LIMIT 10",
@@ -57,3 +82,6 @@ app.get("/api/leaderboard", (req, res) => {
         }
     );
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Server started"));
