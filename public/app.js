@@ -35,7 +35,7 @@ document.getElementById("content").innerHTML = `
     </div>
 </div>
 
-<h3>🏆 Топ 10 проигравших</h3>
+<h3>🏆 Топ 10</h3>
 <div id="leaderboard"></div>
 `;
 
@@ -61,7 +61,8 @@ function startGame() {
     food = randomFood();
     document.getElementById("gameOver").innerText = "";
     clearInterval(interval);
-    speed = 250; // сброс скорости при начале новой игры
+    speed = 120; // сброс скорости
+    draw(); // <-- добавлено, сразу рисуем змейку
     interval = setInterval(update, speed);
 }
 
