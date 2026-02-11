@@ -44,7 +44,7 @@ let ctx = canvas.getContext("2d");
 
 let tiles = 20;
 let snake, food, dx, dy, score, interval;
-let speed = 90; // начальная скорость игры (мс)
+let speed = 50; // начальная скорость игры (мс)
 
 function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
