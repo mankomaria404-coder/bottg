@@ -23,7 +23,7 @@ document.getElementById("content").innerHTML = `
 <p>Рекорд: <span id="bestScore">0</span></p>
 <canvas id="gameCanvas"></canvas>
 <p id="gameOver" style="color:red;"></p>
-<button onclick="startGame()">Начать</button>
+<button onclick="startGame()">Погна</button>
 
 <!-- Кнопки для управления -->
 <div id="controls">
@@ -44,7 +44,7 @@ let ctx = canvas.getContext("2d");
 
 let tiles = 20;
 let snake, food, dx, dy, score, interval;
-let speed = 50; // начальная скорость игры (мс)
+let speed = 5; // начальная скорость игры (мс)
 
 function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
@@ -61,7 +61,7 @@ function startGame() {
     food = randomFood();
     document.getElementById("gameOver").innerText = "";
     clearInterval(interval);
-    speed = 120; // сброс скорости при начале новой игры
+    speed = 5; // сброс скорости при начале новой игры
     interval = setInterval(update, speed);
 }
 
@@ -82,7 +82,7 @@ function update() {
     
     // Каждые 10 очков увеличиваем скорость на 10%
     if(score % 10 === 0){
-        speed = Math.max(10, speed * 0.9); // минимальная скорость 30 мс
+        speed = Math.max(5, speed * 0.9); // минимальная скорость 30 мс
         clearInterval(interval);
         interval = setInterval(update, speed);
     }
