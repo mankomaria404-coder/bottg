@@ -46,7 +46,7 @@ let ctx = canvas.getContext("2d");
 
 let tiles = 20;
 let snake, food, dx, dy, score, interval;
-let speed = 120; // начальная скорость
+let speed = 250; // начальная скорость
 
 // Подгоняем canvas под экран
 function resizeCanvas() {
@@ -65,7 +65,7 @@ function startGame() {
     food = randomFood();
     document.getElementById("gameOver").innerText = "";
     clearInterval(interval);
-    speed = 120;
+    speed = 250;
     draw(); // сразу рисуем стартовую змейку
     interval = setInterval(update, speed);
 }
@@ -78,7 +78,7 @@ function update() {
     if (head.x < 0 || head.y < 0 || head.x >= tiles || head.y >= tiles ||
         snake.some(s => s.x === head.x && s.y === head.y)) {
         clearInterval(interval);
-        document.getElementById("gameOver").innerText = "Игра окончена! Очки: " + score;
+        document.getElementById("gameOver").innerText = "Твоя змейка умерла, учись играть! Очки: " + score;
         saveBestScore(score);
         return;
     }
@@ -109,7 +109,7 @@ function draw() {
     const tileSize = canvas.width / tiles;
 
     // фон игрового поля
-    ctx.fillStyle = "#003300";
+    ctx.fillStyle = "#50C878";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // тело змейки
