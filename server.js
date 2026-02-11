@@ -11,7 +11,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// Создание таблицы пользователей
 db.run(`
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
@@ -25,7 +24,6 @@ CREATE TABLE IF NOT EXISTS users (
 )
 `);
 
-// Добавление/обновление пользователя
 app.post("/api/user", (req, res) => {
     const { telegram_id, first_name, last_name, username, photo_url } = req.body;
     db.run(
@@ -44,7 +42,6 @@ app.post("/api/user", (req, res) => {
     );
 });
 
-// Получение рекорда пользователя
 app.get("/api/best-score/:id", (req, res) => {
     db.get("SELECT best_score FROM users WHERE telegram_id = ?", [req.params.id], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -52,7 +49,6 @@ app.get("/api/best-score/:id", (req, res) => {
     });
 });
 
-// Сохранение рекорда
 app.post("/api/best-score", (req, res) => {
     const { telegram_id, score } = req.body;
     db.run(
@@ -70,7 +66,6 @@ app.post("/api/best-score", (req, res) => {
     );
 });
 
-// Лидерборд топ-10
 app.get("/api/leaderboard", (req, res) => {
     db.all("SELECT username, best_score FROM users ORDER BY best_score DESC LIMIT 10", [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -78,7 +73,6 @@ app.get("/api/leaderboard", (req, res) => {
     });
 });
 
-// Отдача главной страницы
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
