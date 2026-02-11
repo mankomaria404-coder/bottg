@@ -24,6 +24,17 @@ document.getElementById("content").innerHTML = `
 <canvas id="gameCanvas"></canvas>
 <p id="gameOver" style="color:red;"></p>
 <button onclick="startGame()">Начать</button>
+
+<!-- Кнопки для управления -->
+<div id="controls">
+    <button onclick="changeDirection('up')">⬆️</button>
+    <div>
+        <button onclick="changeDirection('left')">⬅️</button>
+        <button onclick="changeDirection('down')">⬇️</button>
+        <button onclick="changeDirection('right')">➡️</button>
+    </div>
+</div>
+
 <h3>🏆 Топ 10</h3>
 <div id="leaderboard"></div>
 `;
@@ -97,6 +108,16 @@ canvas.addEventListener("touchend", e=>{
         else if(dyTouch<0 && dy!==1){dx=0; dy=-1;}
     }
 });
+
+// Buttons control
+function changeDirection(direction) {
+    switch(direction){
+        case 'up': if(dy !== 1){ dx=0; dy=-1; } break;
+        case 'down': if(dy !== -1){ dx=0; dy=1; } break;
+        case 'left': if(dx !== 1){ dx=-1; dy=0; } break;
+        case 'right': if(dx !== -1){ dx=1; dy=0; } break;
+    }
+}
 
 async function loadBestScore() {
     const res = await fetch(`/api/best-score/${user.id}`);
