@@ -25,7 +25,7 @@ document.getElementById("content").innerHTML = `
 <p>Рекорд: <span id="bestScore">0</span></p>
 <canvas id="gameCanvas"></canvas>
 <p id="gameOver" style="color:red;"></p>
-<button onclick="startGame()">Начать</button>
+<button onclick="startGame()">Погна</button>
 
 <!-- Кнопки управления -->
 <div id="controls">
