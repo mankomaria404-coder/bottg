@@ -71,7 +71,7 @@ function update() {
     if(head.x<0||head.y<0||head.x>=tiles||head.y>=tiles||
        snake.some(s=>s.x===head.x && s.y===head.y)){
         clearInterval(interval);
-        document.getElementById("gameOver").innerText="Игра окончена! Очки: "+score;
+        document.getElementById("gameOver").innerText="Твоя змейка умерла, учись играть!!! Очки: "+score;
         saveBestScore(score);
         return;
     }
@@ -82,7 +82,7 @@ function update() {
     
     // Каждые 10 очков увеличиваем скорость на 10%
     if(score % 10 === 0){
-        speed = Math.max(30, speed * 0.9); // минимальная скорость 30 мс
+        speed = Math.max(10, speed * 0.9); // минимальная скорость 30 мс
         clearInterval(interval);
         interval = setInterval(update, speed);
     }
