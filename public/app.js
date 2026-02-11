@@ -35,7 +35,7 @@ document.getElementById("content").innerHTML = `
     </div>
 </div>
 
-<h3>🏆 Топ 10</h3>
+<h3>🏆 Топ 10 проигравших</h3>
 <div id="leaderboard"></div>
 `;
 
@@ -44,7 +44,7 @@ let ctx = canvas.getContext("2d");
 
 let tiles = 20;
 let snake, food, dx, dy, score, interval;
-let speed = 5; // начальная скорость игры (мс)
+let speed = 250; // начальная скорость игры (мс)
 
 function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
@@ -61,7 +61,7 @@ function startGame() {
     food = randomFood();
     document.getElementById("gameOver").innerText = "";
     clearInterval(interval);
-    speed = 5; // сброс скорости при начале новой игры
+    speed = 250; // сброс скорости при начале новой игры
     interval = setInterval(update, speed);
 }
 
@@ -82,7 +82,7 @@ function update() {
     
     // Каждые 10 очков увеличиваем скорость на 10%
     if(score % 10 === 0){
-        speed = Math.max(5, speed * 0.9); // минимальная скорость 30 мс
+        speed = Math.max(30, speed * 0.9); // минимальная скорость 30 мс
         clearInterval(interval);
         interval = setInterval(update, speed);
     }
