@@ -99,20 +99,12 @@ function update() {
 function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     const tileSize = canvas.width / tiles;
+    ctx.fillStyle="green";
+    snake.forEach(s=>ctx.fillRect(s.x*tileSize,s.y*tileSize,tileSize-2,tileSize-2));
+    ctx.fillStyle="red";
+    ctx.fillRect(food.x*tileSize,food.y*tileSize,tileSize-2,tileSize-2);
+}
 
-    // Рисуем тело змейки (кроме головы)
-    ctx.fillStyle = "lime"; // цвет тела
-    for(let i = 1; i < snake.length; i++){
-        const s = snake[i];
-        ctx.fillRect(s.x*tileSize, s.y*tileSize, tileSize-2, tileSize-2);
-    }
-
-    // Рисуем голову змейки
-    if(snake.length > 0){
-        const head = snake[0];
-        ctx.fillStyle = "green"; // цвет головы (можешь заменить на любой)
-        ctx.fillRect(head.x*tileSize, head.y*tileSize, tileSize-2, tileSize-2);
-    }
 
     // Еда
     ctx.fillStyle = "red";
