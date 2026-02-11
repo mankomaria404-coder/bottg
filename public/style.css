@@ -26,8 +26,26 @@ button {
     color: white;
 }
 
+#controls {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#controls div {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+#controls button {
+    margin: 2px;
+    padding: 12px 18px;
+    font-size: 18px;
+}
+
 #leaderboard {
     margin-top: 10px;
     font-size: 14px;
 }
-
