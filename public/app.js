@@ -44,6 +44,7 @@ let ctx = canvas.getContext("2d");
 
 let tiles = 20;
 let snake, food, dx, dy, score, interval;
+let speed = 120; // начальная скорость игры (мс)
 
 function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
@@ -54,12 +55,14 @@ resizeCanvas();
 
 function startGame() {
     snake = [{x:10, y:10}];
-    dx=1; dy=0;
-    score=0;
-    food=randomFood();
-    document.getElementById("gameOver").innerText="";
+    dx = 1;
+    dy = 0;
+    score = 0;
+    food = randomFood();
+    document.getElementById("gameOver").innerText = "";
     clearInterval(interval);
-    interval=setInterval(update,120);
+    speed = 120; // сброс скорости при начале новой игры
+    interval = setInterval(update, speed);
 }
 
 function update() {
@@ -74,10 +77,21 @@ function update() {
     }
 
     snake.unshift(head);
-    if(head.x===food.x && head.y===food.y){
-        score++;
-        food=randomFood();
-    } else snake.pop();
+    if(head.x === food.x && head.y === food.y){
+    score++;
+    
+    // Каждые 10 очков увеличиваем скорость на 10%
+    if(score % 10 === 0){
+        speed = Math.max(30, speed * 0.9); // минимальная скорость 30 мс
+        clearInterval(interval);
+        interval = setInterval(update, speed);
+    }
+
+    food = randomFood();
+} else {
+    snake.pop();
+}
+
     draw();
 }
 
